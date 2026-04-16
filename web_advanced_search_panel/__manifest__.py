@@ -1,5 +1,5 @@
 {
-    "name": "Search Panel",
+    "name": "Inline Search Panel",
     "version": "17.0.1.0.0",
     "category": "Web",
    "summary": "Display selected search fields inline in the top search bar using context",
