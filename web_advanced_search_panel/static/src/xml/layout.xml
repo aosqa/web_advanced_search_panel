@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template_id" name="template_name">
+    <t t-name="web_advanced_search_panel.LayoutExtension"
+       t-inherit="web.Layout"
+       t-inherit-mode="extension">
+        <xpath expr="//t[@t-component='components.ControlPanel']" position="after">
+            <t t-if="env.searchModel" t-component="AdvancedSearchPanel"/>
+        </xpath>
+    </t>
+</template>

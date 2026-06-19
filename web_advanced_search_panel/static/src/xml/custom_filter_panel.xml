@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+<t t-name="web_advanced_search_panel.AdvancedSearchPanel">
+    <div t-if="env.config.viewType === 'list'" class="o_advanced_search_panel d-flex gap-2 p-2 border-bottom">
+
+        <div t-ref="root" class="d-flex flex-wrap align-items-end gap-3 p-2">
+
+            <t t-foreach="state.searchFields" t-as="field" t-key="field._id">
+                <div class="d-flex flex-column" style="min-width: 220px;">
+        
+                    <span class="fw-bold mb-1 text-muted" t-esc="field.description"/>
+        
+                    <t t-if="field.fieldType === 'many2one'">
+                        <div class="o_advanced_m2o_dropdown bg-white border rounded p-1" style="min-width: 200px;">
+                            <Many2XAutocomplete t-props="getAutocompleteProps(field)"/>
+                        </div>
+                    </t>
+        
+                    <t t-if="field.fieldType === 'char'">
+                        <input type="text"
+                               class="form-control"
+                               t-att-value="state.values[field.fieldName] || ''"
+                               t-att-placeholder="field.description"
+                               t-on-input="(ev) => this.onInput(field.fieldName, ev.target.value)"
+                               t-on-keydown="onKeyDown"
+                               />
+                    </t>
+        
+                    <t t-if="field.fieldType === 'date'">
+                        <div class="d-flex flex-row align-items-center gap-1">
+                            <DateTimeInput
+                                type="'date'"
+                                value="state.values[field.fieldName + '_from']"
+                                onChange="(val) => this.onDateChange(field.fieldName + '_from', val)"
+                                placeholder="'From'"
+                            />
+                            <span class="text-small text-muted">-</span>
+                            <DateTimeInput
+                                type="'date'"
+                                value="state.values[field.fieldName + '_to']"
+                                onChange="(val) => this.onDateChange(field.fieldName + '_to', val)"
+                                placeholder="'To'"
+                            />
+                        </div>
+                    </t>
+        
+                </div>
+            </t>
+            
+            <button t-if="state.searchFields.length" class="btn btn-primary h-100" t-on-click="applyFilter">
+                <i class="fa fa-search me-1"/> Filter
+            </button>
+        </div>
+    </div>
+</t>
+</templates>
