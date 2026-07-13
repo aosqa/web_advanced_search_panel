@@ -10,7 +10,7 @@ import {
     useSubEnv,
 } from "@odoo/owl";
 import { SearchBar } from "@web/search/search_bar/search_bar";
-import { serializeDate, deserializeDate } from "@web/core/l10n/dates";
+import { serializeDate,serializeDateTime, deserializeDate } from "@web/core/l10n/dates";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
@@ -154,6 +154,18 @@ export class AdvancedSearchPanel extends SearchBar {
                     domain.push([field.fieldName, "<=", serializeDate(to)]);
                 }
             }
+
+            else if (field.fieldType === "datetime") {
+                const from = this.state.values[`${field.fieldName}_from`];
+                const to   = this.state.values[`${field.fieldName}_to`];
+                if (from) {
+                    domain.push([field.fieldName, ">=", serializeDateTime(from)]);
+                }
+                if (to) {
+                    domain.push([field.fieldName, "<=", serializeDateTime(to)]);
+                }
+            }
+
         });
     
         const advancedFieldNames = this.state.searchFields.map(f => f.fieldName);

@@ -26,17 +26,17 @@
                                />
                     </t>
         
-                    <t t-if="field.fieldType === 'date'">
+                    <t t-if="field.fieldType === 'date' || field.fieldType === 'datetime'">
                         <div class="d-flex flex-row align-items-center gap-1">
                             <DateTimeInput
-                                type="'date'"
+                                type="field.fieldType === 'date' ? 'date' : 'datetime'"
                                 value="state.values[field.fieldName + '_from']"
                                 onChange="(val) => this.onDateChange(field.fieldName + '_from', val)"
                                 placeholder="'From'"
                             />
                             <span class="text-small text-muted">-</span>
                             <DateTimeInput
-                                type="'date'"
+                                type="field.fieldType === 'date' ? 'date' : 'datetime'"
                                 value="state.values[field.fieldName + '_to']"
                                 onChange="(val) => this.onDateChange(field.fieldName + '_to', val)"
                                 placeholder="'To'"
